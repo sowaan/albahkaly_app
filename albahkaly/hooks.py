@@ -148,7 +148,14 @@ fixtures = [
     {
         "doctype": "Custom Field",
         "filters": [
-            ["dt", "in", ["Customer"]]
+            [
+                "dt",
+                "in",
+                (
+                    "Customer",
+                    "KYC Request",
+                ),
+            ],
         ]
     }
 ]
