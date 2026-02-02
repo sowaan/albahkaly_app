@@ -1,8 +1,73 @@
 import frappe
 from frappe.model.document import Document
-
+import re
+import frappe
+from frappe.model.document import Document
+from frappe.utils import getdate, today
+from frappe.utils import validate_email_address
 
 class KYCRequest(Document):
+
+    def validate(self):
+
+        # Commercial Registration – 10 digits
+        if self.commercial_registration_cr:
+            if not re.fullmatch(r"\d{10}", self.commercial_registration_cr):
+                frappe.throw(
+                    "Commercial Registration must be exactly 10 digits"
+                )
+
+        # CR Expiry Date – today or future only
+        if self.cr_expiry_date:
+            if getdate(self.cr_expiry_date) < getdate(today()):
+                frappe.throw(
+                    "CR Expiry Date cannot be in the past"
+                )
+
+        # VAT Number – 15 digits
+        if self.vat_number:
+            if not re.fullmatch(r"\d{15}", self.vat_number):
+                frappe.throw(
+                    "VAT Number must be exactly 15 digits"
+                )
+
+        # Short National Address – 4 letters + 4 digits
+        if self.short_national_address:
+            if not re.fullmatch(r"[A-Za-z]{4}\d{4}", self.short_national_address):
+                frappe.throw(
+                    "Short National Address must be 4 letters followed by 4 digits (e.g. ABCD1234)"
+                )
+
+        if self.id:
+            if not re.fullmatch(r"\d{10}", self.id):
+                frappe.throw(
+                    "ID must be exactly 10 digits"
+                )
+        
+        if self.mobile:
+            if not re.fullmatch(r"\d{10}", self.mobile):
+                frappe.throw(
+                    "Mobile must be exactly 10 digits"
+                )
+        
+        if self.mobile_number_2:
+            if not re.fullmatch(r"\d{10}", self.mobile_number_2):
+                frappe.throw(
+                    "Mobile 2 must be exactly 10 digits"
+                )
+        
+        if self.email:
+            validate_email_address(self.email, throw=True)
+        
+        count = int(self.delivery_locations_in_ksa or 0)
+
+        if count >= 1 and (not self.warehouse_city or not self.district):
+            frappe.throw("Warehouse and District are required for location 1")
+        
+        for i in range(2, count + 1):
+            if not self.get(f"custom_warehouse_city_{i}") or not self.get(f"custom_district_{i}"):
+                frappe.throw(f"Warehouse and District are required for location {i}")
+
 
     def before_insert(self):
         self.created_customer = None
@@ -84,7 +149,7 @@ def create_customer_from_kyc(kyc_name):
 
         "expected_shipments_monthly_import": "custom_expected_shipments_monthly_import",
         "expected_shipments_monthly_export": "custom_expected_shipments_monthly_export",
-        "delivery_locations__in_ksa_": "custom_delivery_locations_in_ksa",
+        "delivery_locations_in_ksa": "custom_delivery_locations_in_ksa",
         "shipment_type": "custom_shipment_type",		
         
         "warehouse_city": "custom_warehouse_city",
@@ -109,11 +174,30 @@ def create_customer_from_kyc(kyc_name):
             customer.set(customer_field, doc.get(kyc_field))
     
 
-    value = doc.get("delivery_locations_in_ksa")
+    # value = doc.get("delivery_locations_in_ksa")
 
-    if value is not None:
-        customer.set("custom_delivery_locations_in_ksa", str(value))
-        
+    # if value is not None:
+    #     customer.set("custom_delivery_locations_in_ksa", str(value))
+    
+    # =================================================
+    # 🔥 WAREHOUSE CHILD TABLE MAPPING (NEW)
+    # =================================================
+    customer.set("custom_warehouse", [])
+
+    count = int(doc.delivery_locations_in_ksa or 0)
+
+    if count >= 1:
+        # Location 1 (base fields)
+        row = customer.append("custom_warehouse", {})
+        row.warehouse = doc.warehouse_city
+        row.district = doc.district
+
+    # Locations 2 .. N
+    for i in range(2, count + 1):
+        row = customer.append("custom_warehouse", {})
+        row.warehouse = doc.get(f"custom_warehouse_city_{i}")
+        row.district = doc.get(f"custom_district_{i}")
+
     customer.custom_kyc_request_reference = doc.name   
     customer.insert(ignore_permissions=True)
 

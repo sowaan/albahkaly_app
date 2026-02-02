@@ -137,14 +137,14 @@
   },
   {
    "fieldname": "region",
-   "fieldtype": "Data",
+   "fieldtype": "Select",
    "label": "Region",
    "reqd": 1,
    "translatable": 1
   },
   {
    "fieldname": "city",
-   "fieldtype": "Data",
+   "fieldtype": "Select",
    "label": "City",
    "reqd": 1,
    "translatable": 1
@@ -196,10 +196,10 @@
   },
   {
    "fieldname": "nationality",
-   "fieldtype": "Data",
+   "fieldtype": "Link",
    "label": "Nationality",
-   "reqd": 1,
-   "translatable": 1
+   "options": "Country",
+   "reqd": 1
   },
   {
    "fieldname": "job",
@@ -352,15 +352,17 @@
   },
   {
    "fieldname": "warehouse_city",
-   "fieldtype": "Data",
+   "fieldtype": "Select",
    "label": "Warehouse City",
+   "options": "\nAbha\nAl Ahsa\nAl Bahah\nAl Kharj\nAl Lith\nAl Majma'ah\nAl Quwayiyah\nAl Ula\nArar\nBadr\nBishah\nBuraidah\nDammam\nDhahran\nDiriyah\nDuba\nHail\nHaql\nHofuf\nJeddah\nJizan\nJubail\nKhamis Mushait\nKhaybar\nKhobar\nKhulais\nMadinah\nMakkah\nMubarraz\nNajran\nQatif\nQurayyat\nRabigh\nRafha\nRas Tanura\nRiyadh\nSakaka\nSharurah\nTabuk\nTaif\nTuraif\nUnaizah\nWadi ad-Dawasir\nYanbu",
    "reqd": 1,
    "translatable": 1
   },
   {
    "fieldname": "district",
-   "fieldtype": "Data",
+   "fieldtype": "Select",
    "label": "District",
+   "options": "\nRiyadh\nMakkah\nMadinah\nQassim\nEastern Province\nAsir\nTabuk\nHail\nNorthern Borders\nJazan\nNajran\nAl Bahah\nAl Jawf",
    "reqd": 1,
    "translatable": 1
   },
@@ -405,7 +407,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-01-07 15:26:13.341824",
+ "modified": "2026-02-02 10:46:04.101427",
  "modified_by": "Administrator",
  "module": "Albahkaly App",
  "name": "KYC Request",

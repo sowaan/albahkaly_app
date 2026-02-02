@@ -1,0 +1,43 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2026-01-30 23:37:34.343750",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "warehouse",
+  "district"
+ ],
+ "fields": [
+  {
+   "fieldname": "district",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "District",
+   "options": "\nRiyadh\nMakkah\nMadinah\nQassim\nEastern Province\nAsir\nTabuk\nHail\nNorthern Borders\nJazan\nNajran\nAl Bahah\nAl Jawf"
+  },
+  {
+   "fieldname": "warehouse",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Warehouse",
+   "options": "\nAbha\nAl Ahsa\nAl Bahah\nAl Kharj\nAl Lith\nAl Majma'ah\nAl Quwayiyah\nAl Ula\nArar\nBadr\nBishah\nBuraidah\nDammam\nDhahran\nDiriyah\nDuba\nHail\nHaql\nHofuf\nJeddah\nJizan\nJubail\nKhamis Mushait\nKhaybar\nKhobar\nKhulais\nMadinah\nMakkah\nMubarraz\nNajran\nQatif\nQurayyat\nRabigh\nRafha\nRas Tanura\nRiyadh\nSakaka\nSharurah\nTabuk\nTaif\nTuraif\nUnaizah\nWadi ad-Dawasir\nYanbu"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-01-31 18:49:12.849779",
+ "modified_by": "Administrator",
+ "module": "Albahkaly App",
+ "name": "Warehouse Location",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
