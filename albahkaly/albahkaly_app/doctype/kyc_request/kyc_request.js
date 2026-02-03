@@ -89,26 +89,4 @@ function allow_only_numbers(frm, fieldname, max_length) {
 
 
 
-// frappe.ready(function () {
-//     console.log("Web Form script loaded"); // 🔍 MUST print
-
-//     frappe.web_form.on('delivery_locations_in_ksa', function () {
-//         const count = cint(frappe.web_form.get_value('delivery_locations_in_ksa')) || 0;
-//         console.log("Selected count:", count);
-
-//         frappe.web_form.toggle_display('warehouse_city', count >= 1);
-//         frappe.web_form.toggle_display('district', count >= 1);
-
-//         for (let i = 2; i <= 20; i++) {
-//             const show = count >= i;
-//             frappe.web_form.toggle_display(`custom_warehouse_city_${i}`, show);
-//             frappe.web_form.toggle_display(`custom_district_${i}`, show);
-//         }
-//     });
-
-//     // Trigger once on load
-//     frappe.web_form.trigger('delivery_locations_in_ksa');
-// });
-
-
 
